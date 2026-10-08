@@ -7,8 +7,8 @@
   --foreground: #141414;
   --muted: #6b6b6b;
   --rule: #e6e6e6;
-  --red: #e5484d;
-  --orange: #ef8a2c;
+  --red: #c62828;
+  --orange: #b45309;
   --blue: #2f6fed;
 }
 
@@ -73,24 +73,40 @@ body {
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(14px);
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
 }
-.reveal[data-shown="true"] {
-  opacity: 1;
-  transform: none;
+.reveal[data-shown="false"] {
+  opacity: 0;
+  transform: translateY(14px);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  .reveal,
+  .reveal[data-shown="false"] {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .pointer-only {
+    display: none;
+  }
+}
+
+@media print {
+  .reveal[data-shown="false"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Notes that describe pointer behaviour make no sense on touch screens. */
+@media (hover: none) {
+  .pointer-only {
+    display: none;
   }
 }

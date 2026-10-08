@@ -17,7 +17,7 @@ export default function Illustration({ project }: { project: Project }) {
           />
         ) : (
           <div className="sketch-soft flex h-full w-full items-center justify-center">
-            <span className="note text-neutral-400">illustration on its way</span>
+            <span className="note text-neutral-500">illustration on its way</span>
           </div>
         )}
       </div>

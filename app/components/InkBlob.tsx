@@ -25,6 +25,7 @@ export default function InkBlob() {
       // Normalise against the viewport so the blob reacts anywhere on the page.
       target.x = Math.max(-1, Math.min(1, dx / (window.innerWidth / 2)));
       target.y = Math.max(-1, Math.min(1, dy / (window.innerHeight / 2)));
+      if (!frame) frame = requestAnimationFrame(tick);
     };
 
     const tick = () => {
@@ -39,11 +40,12 @@ export default function InkBlob() {
         "transform",
         `rotate(${current.x * 4} 160 250)`,
       );
-      frame = requestAnimationFrame(tick);
+      const settled =
+        Math.abs(target.x - current.x) < 0.001 && Math.abs(target.y - current.y) < 0.001;
+      frame = settled ? 0 : requestAnimationFrame(tick);
     };
 
     window.addEventListener("pointermove", onMove);
-    frame = requestAnimationFrame(tick);
     return () => {
       window.removeEventListener("pointermove", onMove);
       cancelAnimationFrame(frame);
@@ -76,7 +78,7 @@ export default function InkBlob() {
           </g>
         </g>
       </svg>
-      <span className="note note-blue absolute right-0 top-6 rotate-6">
+      <span className="note note-blue pointer-only absolute right-0 top-6 rotate-6">
         follows your cursor
       </span>
     </div>

@@ -120,7 +120,7 @@ export default function Home() {
           <SectionHeading id="experience" title="Experience" />
           <ol className="space-y-12">
             {experience.map((role) => (
-              <li key={role.company}>
+              <li key={`${role.company}-${role.dates}`}>
                 <Reveal className="grid gap-3 md:grid-cols-[200px_1fr] md:gap-10">
                   <div className="font-mono text-xs leading-relaxed text-muted">
                     <p>{role.dates}</p>
