@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
+/* Light only: the illustrations are drawn on pure white, so the page stays white. */
 :root {
+  color-scheme: light;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #141414;
+  --muted: #6b6b6b;
+  --rule: #e6e6e6;
+  --red: #c62828;
+  --orange: #b45309;
+  --blue: #2f6fed;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-ink-red: var(--red);
+  --color-ink-orange: var(--orange);
+  --color-ink-blue: var(--blue);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-hand: var(--font-caveat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Uneven radii give a border the slight wobble of a pen line. */
+.sketch {
+  border: 1.5px solid var(--foreground);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+.sketch-soft {
+  border: 1.5px dashed #bdbdbd;
+  border-radius: 18px 240px 16px 220px / 230px 14px 250px 18px;
+}
+
+/* Handwritten margin notes: the only place the three accent colours appear. */
+.note {
+  font-family: var(--font-caveat), cursive;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+.note-red {
+  color: var(--red);
+}
+.note-orange {
+  color: var(--orange);
+}
+.note-blue {
+  color: var(--blue);
+}
+
+.underline-hand {
+  background-image: linear-gradient(var(--foreground), var(--foreground));
+  background-repeat: no-repeat;
+  background-size: 100% 1.5px;
+  background-position: 0 100%;
+  padding-bottom: 2px;
+}
+.underline-hand:hover {
+  background-size: 100% 3px;
+}
+
+.reveal {
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal[data-shown="false"] {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .reveal[data-shown="false"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .pointer-only {
+    display: none;
+  }
+}
+
+@media print {
+  .reveal[data-shown="false"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Notes that describe pointer behaviour make no sense on touch screens. */
+@media (hover: none) {
+  .pointer-only {
+    display: none;
+  }
 }
